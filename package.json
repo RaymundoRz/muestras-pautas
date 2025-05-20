@@ -13,6 +13,13 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^7.0.2",
+    "cheerio": "^1.0.0",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.0",
+    "googleapis": "^148.0.0",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "puppeteer": "^24.9.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
