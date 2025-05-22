@@ -4,24 +4,18 @@ const path = require("path");
 const medidasValidas = ["300x250", "728x90", "160x600"];
 const carpetasTipos = ["Awareness", "Consideracion", "Performance"];
 
-const rutaEntrada = "./archivos"; // Cambia a tu ruta con los banners
-const rutaSalida = "./organizados";
+const rutaEntrada = path.resolve(__dirname, "../archivos");
+const rutaSalida = path.resolve(__dirname, "../organizados");
 
 function detectarMedida(nombre) {
-  for (let medida of medidasValidas) {
-    if (nombre.includes(medida)) return medida;
-  }
-  return null;
+  return medidasValidas.find((m) => nombre.includes(m)) || null;
 }
 
 function detectarTipo(nombre) {
-  for (let tipo of carpetasTipos) {
-    if (nombre.toLowerCase().includes(tipo.toLowerCase())) return tipo;
-  }
-  return "Desconocido";
+  return carpetasTipos.find((t) => nombre.toLowerCase().includes(t.toLowerCase())) || "Desconocido";
 }
 
-function organizarArchivos() {
+module.exports = async function () {
   const archivos = fs.readdirSync(rutaEntrada);
 
   archivos.forEach((archivo) => {
@@ -30,7 +24,7 @@ function organizarArchivos() {
     const tipo = detectarTipo(archivo);
     const ext = path.extname(archivo).toLowerCase();
 
-    if (!medida) return; // Ignorar si no tiene medida válida
+    if (!medida) return;
 
     const destinoDir = path.join(rutaSalida, tipo, medida);
     if (!fs.existsSync(destinoDir)) {
@@ -41,6 +35,4 @@ function organizarArchivos() {
     fs.copyFileSync(archivoPath, destinoPath);
     console.log(`✅ ${archivo} => ${destinoDir}`);
   });
-}
-
-organizarArchivos();
+};
